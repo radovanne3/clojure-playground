@@ -19,6 +19,7 @@
 ;; => "Luke Skywarker"
 
 (:skill(:luke starwars-characters))
+
 ;; => "Targeting Swamp Rats"
 
 ;; updating assoc-in
@@ -69,5 +70,176 @@
     (zipmap keys numbers)))
 
 (generate-map-verbose 10)
+
+(println "Test")
+
+
+
+;; CALLING JAVA INSIDE CLOJURE
+
+
+(def rnd (new java.util.Random))
+
+
+(. rnd nextInt 10)
+;; => 3
+;; => 0
+;; => 7
+;; => 3
+
+;; Instance field
+(def p (java.awt.Point. 10 20))
+
+(. p x)
+;; => 10
+
+(. p y)
+;; => 20
+
+;; Static method
+
+(. System lineSeparator)
+;; => "\n"
+
+
+;; Static field
+
+(. Math PI)
+;; => 3.141592653589793
+
+;; In case that both method and field have same name, method  will be preferred, In that case we use this notation (.p -x)
+
+(. p -x)
+;; => 10
+
+;; HERE IS MORE SIMPLE VERSION OF FORMS WRITTEN ABOVE, LETS DO IT CLOJURE WAY
+
+(.nextInt rnd 10)
+;; => 8
+
+(.x p)
+;; => 10
+
+(defn sim-clc-test
+  [a b]
+  (+ a b))
+
+(sim-clc-test 5 5)
+
+(.nextInt rnd (sim-clc-test 5 5))
+
+;; Well this is interesting
+
+(.nextInt rnd (* Math/PI 10))
+;; => 1
+;; => 9
+;; => 1
+;; => 21
+;; => 10
+
+
+
+;; FLOW CONTROL ( IMPORTANT )
+
+;; BRANCH WITH IF
+
+(defn is-small?
+  [number]
+  (if (< number 50)
+    "LARGER"
+    "SMALLER"))
+
+
+(is-small? 60)
+;; => "SMALLER"
+
+(is-small? 30)
+;; => "LARGER"
+
+
+;; RECUR/ LOOP RECUR
+
+(loop [result [] x 10]
+  (if (zero? x)
+    result
+    (recur (conj result x) (dec x))))
+
+(defn indexed
+  [coll]
+  (map-indexed vector coll))
+
+(indexed "abcde")
+;; => ([0 \a] [1 \b] [2 \c] [3 \d] [4 \e])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
