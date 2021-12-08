@@ -1,5 +1,6 @@
 (ns snorlax-clojure.playground
-  (:gen-class))
+  (:gen-class)
+  (:import (clojure.java.api Clojure)))
 
 (def starwars-characters
   {:luke   {:fullname "Luke Skywarker" :skill "Targeting Swamp Rats"}
@@ -18,7 +19,7 @@
 (:fullname (:luke starwars-characters))
 ;; => "Luke Skywarker"
 
-(:skill(:luke starwars-characters))
+(:skill (:luke starwars-characters))
 
 ;; => "Targeting Swamp Rats"
 
@@ -30,8 +31,8 @@
 ;; threading
 
 (-> starwars-characters
-    :luke ,,,
-    :fullname ,,,)
+    :luke,,,
+    :fullname,,,)
 ;; => "Luke Skywarker"
 
 ;; Generate ascii codes
@@ -71,7 +72,7 @@
 
 (generate-map-verbose 10)
 
-(println "Test")
+#_(println "Test")
 
 
 
@@ -81,7 +82,7 @@
 (def rnd (new java.util.Random))
 
 
-(. rnd nextInt 10)
+(+ 1 (. rnd nextInt 10))
 ;; => 3
 ;; => 0
 ;; => 7
@@ -169,7 +170,69 @@
   (map-indexed vector coll))
 
 (indexed "abcde")
+;; => ((0 \a) (1 \b) (2 \c) (3 \d) (4 \e))
 ;; => ([0 \a] [1 \b] [2 \c] [3 \d] [4 \e])
+
+;; testing map-indexed
+
+(indexed '(1 2 3 4 5 6))
+
+#_(do
+    (println "first things first")
+    "Was it printed?")
+
+
+#_(time (loop [result [] x 5]
+          (if (= x 10)
+            result
+            (recur (conj result x) (inc x)))))
+
+#_(time (into [] (take 5 (iterate dec 5))))
+#_(time (into [] (take 5 (iterate dec 5))))
+
+
+(range 0 12 2)
+
+(take 5 (iterate (fn [x]
+                   (+ x 3)) 1))
+
+'("someting")
+
+(def whole-numbers (take 10 (iterate inc 1)))
+
+(interleave [:fruit :color] ["banana" "yellow"])
+
+(apply assoc {} (interleave [:fruit :color] ["banana" "yellow"]))
+
+(interpose ", " ["apples" "bananas" "pineapple"])
+
+#_(time (apply str (interpose ", " ["apples" "bananas" "pineapple"])))
+#_(time (clojure.string/join \, ["apples" "bananas" "pineapple"])) ;; this is more efficient way...
+
+(vec (range 1 4))
+
+(vector 1 2 3)
+
+;; FILTERING
+
+(take 3 (filter even? whole-numbers))
+
+(take 3 (filter odd? whole-numbers))
+
+(def vowel? #{\a \e \i \o \u})
+(def consonant? (complement vowel?))
+(take-while consonant? "The quick brown fox")
+
+(take 3 (filter (complement odd?) whole-numbers))           ;; now I understand!
+
+
+
+
+
+
+
+
+
 
 
 
